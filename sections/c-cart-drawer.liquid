@@ -1,0 +1,46 @@
+{% comment %}
+  Custom Cart Drawer
+{% endcomment %}
+
+{{ 'custom-cd.css' | asset_url | stylesheet_tag }}
+
+<div class="cart-drawer">
+    <div class="cart-drawer__content">
+        <div class="cart-drawer__close">
+            Close
+        </div>
+        <h2 class="cart-drawer_title">Cart Drawer ({{ cart.item_count }})</h2>
+
+        {% if cart.empty? %}
+            <p>Your cart is empty</p>
+        {% else %}
+            {% form 'cart', cart, class: 'cart-drawer-form' %}
+                {% for item in cart.items %}
+                    <div class="cart-drawer__product-info-wrapp">
+                        <div class="cart-drawer__img-wrapp">
+                            <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title }}">
+                        </div>
+                        <div class="cart-drawer__info-wrapp">
+                            <h3>{{ item.product.title }}</h3>
+                            <p>{{ item.variant.title }}</p>
+                            <a href="{{ item.url_to_remove }}" class="cart-drawer__remove-btn">Remove</a>
+                            <p>{{ item.final_line_price | money }}</p>
+                            <input name="quantity" value="{{ item.quantity }}">
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <p>{{ cart.total_discount | money }}</p>
+                <p>{{ cart.total_price | money }}</p>
+
+                <button type="sumbit" name="checkout">Checkout</button>
+            {% endform %}
+        {% endif %}
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Custom Cart Drawer"
+}
+{% endschema %}
