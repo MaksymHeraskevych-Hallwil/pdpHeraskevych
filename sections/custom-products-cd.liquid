@@ -1,0 +1,69 @@
+{% comment %}
+  Custom Products Cart Drawer
+{% endcomment %}
+
+{{ 'custom-products-cd.css' | asset_url | stylesheet_tag }}
+
+<section>
+  <div class="container-products">
+    {% if section.settings.collection != blank %}
+      {% assign products = section.settings.collection.products | limit: section.settings.products_limit %}
+      <div class="products-grid">
+        {% for product in products %}
+          <div class="product-card">
+            <a href="{{ product.url }}">
+              <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}" style="max-width: 100%; height: auto;">
+              <h3>{{ product.title }}</h3>
+              <p>{{ product.price | money }}</p>
+            </a>
+
+            {% if product.available %}
+                <form action="/cart/add" method="post" enctype="multipart/form-data" style="margin-top: 10px;">
+                    <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                    <input type="hidden" name="quantity" value="1" />
+                    <button type="submit" style="background: #007bff; color: white; border: none; padding: 10px 20px; cursor: pointer;">
+                        Add to cart
+                    </button>
+                </form>
+            {% else %}
+                <button disabled style="background: #ccc; color: #666; border: none; padding: 10px 20px;">
+                Sold out
+                </button>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>Show collection on products</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Products Cart Drawer",
+  "tag": "section",
+  "class": "section-products-collection",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collections products"
+    },
+    {
+      "type": "range",
+      "id": "products_limit",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "default": 8,
+      "label": "Number of products"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Products on Collection"
+    }
+  ]
+}
+{% endschema %}
