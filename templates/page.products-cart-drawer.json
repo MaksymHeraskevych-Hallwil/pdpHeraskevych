@@ -15,9 +15,24 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "custom_products_cd_GEjBhf": {
+      "type": "custom-products-cd",
+      "name": "Custom Products CD",
+      "settings": {
+        "collection": "automated-collection",
+        "products_limit": 8
+      }
+    },
+    "c_cart_drawer_QzTQVE": {
+      "type": "c-cart-drawer",
+      "name": "Custom Cart Drawer",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "custom_products_cd_GEjBhf",
+    "c_cart_drawer_QzTQVE"
   ]
 }
