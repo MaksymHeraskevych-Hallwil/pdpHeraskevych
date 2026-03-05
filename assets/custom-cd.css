@@ -1,12 +1,13 @@
-.cart-drawer{
+.custom-cart-drawer{
     background-color: #00000010;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 999;
     display: none;
+    line-height: 120%;
 }
 
 .cart-drawer--active{
@@ -14,6 +15,8 @@
 }
 
 .cart-drawer__content{
+    overflow: auto;
+    max-height: 90vh;
     margin: 20px;
     position: relative;
     padding: 20px;
@@ -45,12 +48,13 @@
 
 .cart-drawer__img-wrapp{
     width: 100%;
-    max-width: 140px;
+    max-width: 200px;
     border-radius: 12px;
     overflow: hidden;
 }
 
 .cart-drawer__info-wrapp{
     display: flex;
+    flex-direction: column;
     gap: 10px;
 }

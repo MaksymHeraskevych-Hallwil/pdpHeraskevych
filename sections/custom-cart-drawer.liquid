@@ -4,7 +4,7 @@
 
 {{ 'custom-cd.css' | asset_url | stylesheet_tag }}
 
-<div class="cart-drawer">
+<section class="custom-cart-drawer">
     <div class="cart-drawer__content">
         <div class="cart-drawer__close">Close</div>
         <h2 class="cart-drawer_title">Cart ({{ cart.item_count }})</h2>
@@ -19,9 +19,13 @@
                             <img src="{{ item.image | img_url: '200x' }}" alt="{{ item.title | escape }}">
                         </div>
                         <div class="cart-drawer__info-wrapp">
-                            <h3>{{ item.product.title }}</h3>
+                            <h3 class="cart-drawer_title">{{ item.product.title }}</h3>
                             <p>{{ item.variant.title }}</p>
-                            <a href="{{ item.url_to_remove }}" class="cart-drawer__remove-btn">Remove</a>
+                            <button class="cart-drawer__remove-btn" 
+                                data-line-key="{{ item.key }}"
+                                data-variant-id="{{ item.variant_id }}">
+                                Remove
+                            </button>
                             <p>{{ item.final_line_price | money }}</p>
                             <input type="number" name="updates[{{ item.key }}]" value="{{ item.quantity }}" min="0">
                         </div>
@@ -37,12 +41,21 @@
             {% endform %}
         {% endif %}
     </div>
-</div>
+</section>
+
+<script>
+  window.addEventListener('load', function() {
+    if (typeof updateCartDrawerContents === 'function') {
+      updateCartDrawerContents();
+    }
+  });
+</script>
 
 {% schema %}
 {
   "name": "Custom Cart Drawer",
   "tag": "section",
+  "settings": [],
   "presets": [
     {
       "name": "Custom Cart Drawer",
